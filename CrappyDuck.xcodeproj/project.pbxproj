@@ -13,6 +13,12 @@
 		18317FB31A6A9D9C005D0F42 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 18317FB21A6A9D9C005D0F42 /* nice_music.ogg */; };
 		18317FB51A6A9D9C005D0F42 /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18317FB41A6A9D9C005D0F42 /* sansation.ttf */; };
 		18317FB71A6A9D9C005D0F42 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FB61A6A9D9C005D0F42 /* icon.png */; };
+		18317FDF1A6AA0D1005D0F42 /* flappy.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FD91A6AA0D1005D0F42 /* flappy.png */; };
+		18317FE01A6AA0D1005D0F42 /* flappy2.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FDA1A6AA0D1005D0F42 /* flappy2.png */; };
+		18317FE11A6AA0D1005D0F42 /* KMvNhzr.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FDB1A6AA0D1005D0F42 /* KMvNhzr.png */; };
+		18317FE21A6AA0D1005D0F42 /* nTCGarv.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FDC1A6AA0D1005D0F42 /* nTCGarv.png */; };
+		18317FE31A6AA0D1005D0F42 /* S3JIhrb.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FDD1A6AA0D1005D0F42 /* S3JIhrb.png */; };
+		18317FE41A6AA0D1005D0F42 /* yMmRWxk.png in Resources */ = {isa = PBXBuildFile; fileRef = 18317FDE1A6AA0D1005D0F42 /* yMmRWxk.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +31,12 @@
 		18317FB21A6A9D9C005D0F42 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		18317FB41A6A9D9C005D0F42 /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		18317FB61A6A9D9C005D0F42 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		18317FD91A6AA0D1005D0F42 /* flappy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flappy.png; sourceTree = "<group>"; };
+		18317FDA1A6AA0D1005D0F42 /* flappy2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flappy2.png; sourceTree = "<group>"; };
+		18317FDB1A6AA0D1005D0F42 /* KMvNhzr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KMvNhzr.png; sourceTree = "<group>"; };
+		18317FDC1A6AA0D1005D0F42 /* nTCGarv.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nTCGarv.png; sourceTree = "<group>"; };
+		18317FDD1A6AA0D1005D0F42 /* S3JIhrb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = S3JIhrb.png; sourceTree = "<group>"; };
+		18317FDE1A6AA0D1005D0F42 /* yMmRWxk.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = yMmRWxk.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +89,12 @@
 		18317FAF1A6A9D9C005D0F42 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				18317FD91A6AA0D1005D0F42 /* flappy.png */,
+				18317FDA1A6AA0D1005D0F42 /* flappy2.png */,
+				18317FDB1A6AA0D1005D0F42 /* KMvNhzr.png */,
+				18317FDC1A6AA0D1005D0F42 /* nTCGarv.png */,
+				18317FDD1A6AA0D1005D0F42 /* S3JIhrb.png */,
+				18317FDE1A6AA0D1005D0F42 /* yMmRWxk.png */,
 				18317FB01A6A9D9C005D0F42 /* cute_image.jpg */,
 				18317FB21A6A9D9C005D0F42 /* nice_music.ogg */,
 				18317FB41A6A9D9C005D0F42 /* sansation.ttf */,
@@ -144,8 +162,14 @@
 			files = (
 				18317FB71A6A9D9C005D0F42 /* icon.png in Resources */,
 				18317FB51A6A9D9C005D0F42 /* sansation.ttf in Resources */,
+				18317FE01A6AA0D1005D0F42 /* flappy2.png in Resources */,
+				18317FE21A6AA0D1005D0F42 /* nTCGarv.png in Resources */,
 				18317FB31A6A9D9C005D0F42 /* nice_music.ogg in Resources */,
 				18317FB11A6A9D9C005D0F42 /* cute_image.jpg in Resources */,
+				18317FE11A6AA0D1005D0F42 /* KMvNhzr.png in Resources */,
+				18317FE31A6AA0D1005D0F42 /* S3JIhrb.png in Resources */,
+				18317FDF1A6AA0D1005D0F42 /* flappy.png in Resources */,
+				18317FE41A6AA0D1005D0F42 /* yMmRWxk.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +335,7 @@
 				18317FBC1A6A9D9C005D0F42 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
