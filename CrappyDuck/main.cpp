@@ -50,7 +50,8 @@ sf::Text text("So beta, wow", font, 50);
 
 sf::Event event;
 
-int gap = 100; //change this to increase difficulty by making gaps from each pillar wider
+int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
+int pipe_gap; // This is the vertical gap between the pair of piped
 int currentdistance;
 
 
@@ -58,9 +59,10 @@ int currentdistance;
 static void update(){
     pipe_sprite.move(-1, 0);
     bottom_pipe_sprite.move(-1, 0);
+    top_pipe_sprite.move(-1, 0);
     if(pipe_sprite.getPosition().x < -40){
         pipe_sprite.move(40, 0);
-      
+        
     }
   
  
@@ -71,9 +73,13 @@ static void update(){
         }else{
             currentdistance -= gap;
         }
+        top_pipe_sprite.move(500, 0);
         bottom_pipe_sprite.move(500, 0);
         bottom_pipe_sprite.setPosition(bottom_pipe_sprite.getPosition().x, currentdistance);
-        std::cout << currentdistance << std::endl;
+        top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
+        std::cout << bottom_pipe_sprite.getPosition().y;
+        std::cout << "Top: " << top_pipe_sprite.getPosition().y;
+        //std::cout << currentdistance << std::endl;
     }
 
 }
@@ -83,12 +89,14 @@ static void render(){
     // Draw the sprite
     window.draw(sprite);
     
-    // Draw the pipe sprite
-    window.draw(pipe_sprite);
+    
+  
     
     window.draw(bottom_pipe_sprite);
     
+    window.draw(top_pipe_sprite);
     
+    window.draw(pipe_sprite);
     window.draw(text);
 }
 
@@ -129,10 +137,10 @@ static void loadResources(){
         return EXIT_FAILURE;
     }
     
-    if (!bottom_pipe.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(300, 0, 30, 135))) {
+    if (!bottom_pipe.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(302, 0, 27, 135))) {
         return EXIT_FAILURE;
     }
-    if (!top_pipe.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(300, 0, 30, 135))) {
+    if (!top_pipe.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(330, 0, 27, 135))) {
         return EXIT_FAILURE;
     }
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
@@ -150,14 +158,16 @@ static void init(){
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     sprite.setScale(3, 3);
     sprite.setTexture(texture);
-    pipe_sprite.setScale(4, 3 );
+    pipe_sprite.setScale(4, 3);
     pipe_sprite.setTexture(pipe_texture);
+    pipe_gap = 20;
     bottom_pipe_sprite.setTexture(bottom_pipe);
     bottom_pipe_sprite.setScale(3,3);
     bottom_pipe_sprite.move(600, 0);
     
     top_pipe_sprite.setTexture(top_pipe);
     top_pipe_sprite.setScale(3, 3);
+    top_pipe_sprite.move(600, 400 + gap);
     
     
     pipe_sprite.move(0, 600);
