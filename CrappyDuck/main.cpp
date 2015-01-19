@@ -33,6 +33,9 @@ sf::Texture texture;
 
 //pipe textures
 sf::Texture pipe_texture;
+sf::Texture paused_icon;
+
+sf::Sprite paused_sprite;
 sf::Sprite sprite;
 sf::Sprite pipe_sprite;
 sf::Music music;
@@ -53,7 +56,8 @@ sf::Event event;
 int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
 int pipe_gap; // This is the vertical gap between the pair of piped
 int currentdistance;
-
+bool started;
+bool paused;
 
 
 static void update(){
@@ -89,7 +93,6 @@ static void render(){
     // Draw the sprite
     window.draw(sprite);
     
-    
   
     
     window.draw(bottom_pipe_sprite);
@@ -97,7 +100,11 @@ static void render(){
     window.draw(top_pipe_sprite);
     
     window.draw(pipe_sprite);
-    window.draw(text);
+  //  window.draw(text);
+    
+    if(paused == true){
+        window.draw(paused_sprite);
+    }
 }
 
 static void input(){
@@ -114,9 +121,11 @@ static void input(){
     
     // plays music
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space){
-        
-        sprite.move(0, 1);
-        
+        paused = true;
+    }
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::K){
+        std::cout << "This worked!" << std::endl;
+        paused = false;
     }
     
 }
@@ -143,6 +152,10 @@ static void loadResources(){
     if (!top_pipe.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(330, 0, 27, 135))) {
         return EXIT_FAILURE;
     }
+    if (!paused_icon.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(242, 197, 40, 13))){
+        return EXIT_FAILURE;
+        
+    }
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
@@ -160,6 +173,9 @@ static void init(){
     sprite.setTexture(texture);
     pipe_sprite.setScale(4, 3);
     pipe_sprite.setTexture(pipe_texture);
+    paused_sprite.setTexture(paused_icon);
+    paused_sprite.move(130, 200);
+    paused_sprite.setScale(4,4);
     pipe_gap = 20;
     bottom_pipe_sprite.setTexture(bottom_pipe);
     bottom_pipe_sprite.setScale(3,3);
@@ -173,6 +189,8 @@ static void init(){
     pipe_sprite.move(0, 600);
     music.play();
     currentdistance = 0;
+    paused = false;
+    started = false;
 }
 
 int main(int, char const**)
@@ -186,18 +204,23 @@ int main(int, char const**)
     {
         
         
-        while (window.pollEvent(event))
-        {
-            input();
-        }
+            while (window.pollEvent(event))
+            {
+                input();
+            }
 
-        // Clear screen
-        window.clear();
+            // Clear screen
+            window.clear();
         
-        render();
-        update();
+            render();
+            if(paused == false){
+                update();
+                
+            }
+            window.display();
         
-        window.display();
+    
+        
     }
 
     return EXIT_SUCCESS;
