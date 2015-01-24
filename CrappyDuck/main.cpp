@@ -60,10 +60,13 @@ bool started;
 bool paused;
 
 
-static void update(){
-    pipe_sprite.move(-1, 0);
-    bottom_pipe_sprite.move(-1, 0);
-    top_pipe_sprite.move(-1, 0);
+static void update(float elapsed){
+    float delta = elapsed * 60;
+    int speed = 5;
+    
+    pipe_sprite.move((-speed * delta), 0);
+    bottom_pipe_sprite.move((-speed * delta), 0);
+    top_pipe_sprite.move((-speed * delta), 0);
     if(pipe_sprite.getPosition().x < -40){
         pipe_sprite.move(40, 0);
         
@@ -81,9 +84,7 @@ static void update(){
         bottom_pipe_sprite.move(500, 0);
         bottom_pipe_sprite.setPosition(bottom_pipe_sprite.getPosition().x, currentdistance);
         top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
-        std::cout << bottom_pipe_sprite.getPosition().y;
-        std::cout << "Top: " << top_pipe_sprite.getPosition().y;
-        //std::cout << currentdistance << std::endl;
+       
     }
 
 }
@@ -169,6 +170,7 @@ static void loadResources(){
 static void init(){
     text.setColor(sf::Color::Black);
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+    window.setFramerateLimit(60);
     sprite.setScale(3, 3);
     sprite.setTexture(texture);
     pipe_sprite.setScale(4, 3);
@@ -198,34 +200,38 @@ int main(int, char const**)
     // Create the main window
     loadResources();
     init();
+    
+    sf::Clock clock;
 
+    
+    
     // Start the game loop
     while (window.isOpen())
     {
         
+        sf::Time elapsed = clock.restart();
         
-            while (window.pollEvent(event))
-            {
-                input();
-            }
-
-            // Clear screen
-            window.clear();
         
-            render();
-            if(paused == false){
-                update();
-                
-            }
-            window.display();
+        std::cout << elapsed.asSeconds() << std::endl;
         
-    
+        while (window.pollEvent(event))
+        {
+            input();
+        }
+        
+        // Clear screen
+        window.clear();
+        
+        render();
+        if(paused == false){
+            update(elapsed.asSeconds());
+        }
+        window.display();
         
     }
 
     return EXIT_SUCCESS;
     
-
 }
 
 
