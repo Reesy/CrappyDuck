@@ -51,7 +51,16 @@ sf::Sprite bottom_pipe_sprite;
 sf::Font font;
 sf::Text text("So beta, wow", font, 50);
 
+sf::Texture birdTexture1;
+sf::Sprite birdSprite;
+
+sf::Texture birdTexture2;
+
+sf::Texture birdTexture3;
+
 sf::Event event;
+std::vector<sf::Sprite> birdAnimation;
+
 
 int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
 int pipe_gap; // This is the vertical gap between the pair of piped
@@ -90,18 +99,16 @@ static void update(float elapsed){
 }
 
 static void render(){
-    
     // Draw the sprite
     window.draw(sprite);
-    
-  
     
     window.draw(bottom_pipe_sprite);
     
     window.draw(top_pipe_sprite);
     
     window.draw(pipe_sprite);
-  //  window.draw(text);
+    
+    window.draw(birdSprite);
     
     if(paused == true){
         window.draw(paused_sprite);
@@ -157,6 +164,20 @@ static void loadResources(){
         return EXIT_FAILURE;
         
     }
+    
+    if (!birdTexture1.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(220, 120, 20, 20))){
+        return EXIT_FAILURE;
+        
+    }
+    if (!birdTexture2.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(220, 120, 20, 20))){
+        return EXIT_FAILURE;
+        
+    }
+    if (!birdTexture3.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(220, 120, 20, 20))){
+        return EXIT_FAILURE;
+        
+    }
+    
     if (!font.loadFromFile(resourcePath() + "sansation.ttf")) {
         return EXIT_FAILURE;
     }
@@ -187,12 +208,17 @@ static void init(){
     top_pipe_sprite.setScale(3, 3);
     top_pipe_sprite.move(600, 400 + gap);
     
+    birdSprite.setTexture(birdTexture1);
+    birdSprite.setScale(4, 4);
+    birdSprite.move(160, 240);
     
     pipe_sprite.move(0, 600);
     music.play();
     currentdistance = 0;
     paused = false;
     started = false;
+    
+    birdAnimation.push_back(pipe_sprite);
 }
 
 int main(int, char const**)
@@ -211,9 +237,6 @@ int main(int, char const**)
         
         sf::Time elapsed = clock.restart();
         
-        
-        std::cout << elapsed.asSeconds() << std::endl;
-        
         while (window.pollEvent(event))
         {
             input();
@@ -223,9 +246,10 @@ int main(int, char const**)
         window.clear();
         
         render();
-        if(paused == false){
+        if(paused == false && started == true){
             update(elapsed.asSeconds());
         }
+      
         window.display();
         
     }
@@ -234,4 +258,9 @@ int main(int, char const**)
     
 }
 
+void birdAnimate(){
+    
+    
+    
+}
 
