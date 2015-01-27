@@ -65,6 +65,8 @@ std::vector<sf::Sprite> birdAnimation;
 int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
 int pipe_gap; // This is the vertical gap between the pair of piped
 int currentdistance;
+int frameCounter;
+float currentTimeSlice;
 bool started;
 bool paused;
 
@@ -96,6 +98,30 @@ static void update(float elapsed){
        
     }
 
+}
+
+static void birdAnimate(float elapsedTime){
+    currentTimeSlice += elapsedTime;
+    
+    if((int)currentTimeSlice % 2 == 0){
+        frameCounter ++;
+    }
+    
+    if(frameCounter == 0){
+        birdSprite.setTexture(birdTexture1);
+    }
+    if(frameCounter == 1){
+        birdSprite.setTexture(birdTexture2);
+        
+    }
+    if(frameCounter == 2){
+        birdSprite.setTexture(birdTexture3);
+        frameCounter = 0;
+    }
+    
+  
+ 
+    
 }
 
 static void render(){
@@ -135,7 +161,12 @@ static void input(){
         std::cout << "This worked!" << std::endl;
         paused = false;
     }
-    
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
+        birdSprite.setTexture(birdTexture1);
+    }
+    if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Right){
+        birdSprite.setTexture(birdTexture2);
+    }
 }
 
 static void loadResources(){
@@ -169,11 +200,11 @@ static void loadResources(){
         return EXIT_FAILURE;
         
     }
-    if (!birdTexture2.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(220, 120, 20, 20))){
+    if (!birdTexture2.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(261, 86, 20, 20))){
         return EXIT_FAILURE;
         
     }
-    if (!birdTexture3.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(220, 120, 20, 20))){
+    if (!birdTexture3.loadFromFile(resourcePath() + "flappy.png", sf::IntRect(261, 60, 20, 20))){
         return EXIT_FAILURE;
         
     }
@@ -208,7 +239,7 @@ static void init(){
     top_pipe_sprite.setScale(3, 3);
     top_pipe_sprite.move(600, 400 + gap);
     
-    birdSprite.setTexture(birdTexture1);
+    birdSprite.setTexture(birdTexture3);
     birdSprite.setScale(4, 4);
     birdSprite.move(160, 240);
     
@@ -216,7 +247,9 @@ static void init(){
     music.play();
     currentdistance = 0;
     paused = false;
-    started = false;
+    started = true;
+    
+    frameCounter = 0;
     
     birdAnimation.push_back(pipe_sprite);
 }
@@ -244,7 +277,8 @@ int main(int, char const**)
         
         // Clear screen
         window.clear();
-        
+    
+        birdAnimate(elapsed.asSeconds());
         render();
         if(paused == false && started == true){
             update(elapsed.asSeconds());
@@ -258,9 +292,5 @@ int main(int, char const**)
     
 }
 
-void birdAnimate(){
-    
-    
-    
-}
+
 
