@@ -67,6 +67,8 @@ int pipe_gap; // This is the vertical gap between the pair of piped
 int currentdistance;
 int frameCounter;
 float currentTimeSlice;
+float accumulator;
+float animateSpeed;
 bool started;
 bool paused;
 
@@ -101,27 +103,19 @@ static void update(float elapsed){
 }
 
 static void birdAnimate(float elapsedTime){
-    currentTimeSlice += elapsedTime;
-    
-    if((int)currentTimeSlice % 2 == 0){
-        frameCounter ++;
-    }
-    
-    if(frameCounter == 0){
+ //   birdSprite.setTexture(birdTexture1);
+    accumulator += elapsedTime * animateSpeed;
+    std::cout << accumulator << std::endl;
+    if(accumulator > 1 && accumulator < 2){
         birdSprite.setTexture(birdTexture1);
-    }
-    if(frameCounter == 1){
+    }else if(accumulator > 2 && accumulator < 3){
         birdSprite.setTexture(birdTexture2);
-        
-    }
-    if(frameCounter == 2){
+    }else if(accumulator > 3 && accumulator < 4){
         birdSprite.setTexture(birdTexture3);
-        frameCounter = 0;
+    }else if(accumulator > 4){
+        birdSprite.setTexture(birdTexture2);
+        accumulator = 0;
     }
-    
-  
- 
-    
 }
 
 static void render(){
@@ -239,7 +233,7 @@ static void init(){
     top_pipe_sprite.setScale(3, 3);
     top_pipe_sprite.move(600, 400 + gap);
     
-    birdSprite.setTexture(birdTexture3);
+    birdSprite.setTexture(birdTexture1);
     birdSprite.setScale(4, 4);
     birdSprite.move(160, 240);
     
@@ -251,7 +245,8 @@ static void init(){
     
     frameCounter = 0;
     
-    birdAnimation.push_back(pipe_sprite);
+    animateSpeed = 5;
+    //birdAnimation.push_back(pipe_sprite);
 }
 
 int main(int, char const**)
@@ -261,7 +256,6 @@ int main(int, char const**)
     init();
     
     sf::Clock clock;
-
     
     
     // Start the game loop
