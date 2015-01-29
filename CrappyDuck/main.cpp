@@ -72,10 +72,12 @@ int gap = 140; //change this to increase difficulty by making gaps from each pil
 int pipe_gap; // This is the vertical gap between the pair of piped
 int currentdistance;
 int frameCounter;
+int score;
 float currentTimeSlice;
 float accumulator;
 float animateSpeed;
 bool started;
+bool countBlock;
 bool paused;
 bool endState;
 
@@ -102,6 +104,11 @@ static void update(float elapsed){
         
     }
   
+    if(bottomPipeBox.getPosition().x < 110 && countBlock == false){
+        score++;
+        countBlock = true;
+        std::cout << "The Score is: " << score << std::endl;
+    }
  
     if(bottom_pipe_sprite.getPosition().x < -50){
         int random_dist = rand() % 2;
@@ -119,6 +126,7 @@ static void update(float elapsed){
         bottomPipeBox.setPosition(bottomPipeBox.getPosition().x, currentdistance);
         top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
         topPipeBox.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
+        countBlock = false;
        
     }
     collided();
