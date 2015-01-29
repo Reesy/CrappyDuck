@@ -47,6 +47,7 @@ sf::Texture bottom_pipe;
 sf::Sprite top_pipe_sprite;
 sf::Sprite bottom_pipe_sprite;
 
+sf::RectangleShape birdBox(sf::Vector2f(55, 45));
 
 sf::Font font;
 sf::Text text("So beta, wow", font, 50);
@@ -99,6 +100,11 @@ static void update(float elapsed){
         top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
        
     }
+    
+    //gravity
+    
+    birdSprite.move(0, 4);
+    birdBox.move(0, 4);
 
 }
 
@@ -128,8 +134,11 @@ static void render(){
     
     window.draw(pipe_sprite);
     
+    window.draw(birdBox);
+   
     window.draw(birdSprite);
     
+   
     if(paused == true){
         window.draw(paused_sprite);
     }
@@ -149,7 +158,8 @@ static void input(){
     
     // plays music
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space){
-        paused = true;
+        birdSprite.move(0, -80);
+        birdBox.move(0, -80);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::K){
         std::cout << "This worked!" << std::endl;
@@ -219,6 +229,7 @@ static void init(){
     window.setFramerateLimit(60);
     sprite.setScale(3, 3);
     sprite.setTexture(texture);
+    
     pipe_sprite.setScale(4, 3);
     pipe_sprite.setTexture(pipe_texture);
     paused_sprite.setTexture(paused_icon);
@@ -236,6 +247,8 @@ static void init(){
     birdSprite.setTexture(birdTexture1);
     birdSprite.setScale(4, 4);
     birdSprite.move(160, 240);
+    
+    birdBox.move(178,258);
     
     pipe_sprite.move(0, 600);
     music.play();
