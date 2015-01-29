@@ -49,6 +49,11 @@ sf::Sprite bottom_pipe_sprite;
 
 sf::RectangleShape birdBox(sf::Vector2f(55, 45));
 
+sf::RectangleShape topPipeBox(sf::Vector2f(70, 400));
+
+sf::RectangleShape bottomPipeBox(sf::Vector2f(70, 400));
+
+
 sf::Font font;
 sf::Text text("So beta, wow", font, 50);
 
@@ -72,7 +77,15 @@ float accumulator;
 float animateSpeed;
 bool started;
 bool paused;
+bool endState;
 
+static void collided(){
+    
+ 
+    if(birdBox.getGlobalBounds().intersects(topPipeBox.getGlobalBounds()) || birdBox.getGlobalBounds().intersects(bottomPipeBox.getGlobalBounds())){
+        paused = true;
+    }
+}
 
 static void update(float elapsed){
     float delta = elapsed * 60;
@@ -80,6 +93,9 @@ static void update(float elapsed){
     
     pipe_sprite.move((-speed * delta), 0);
     bottom_pipe_sprite.move((-speed * delta), 0);
+    bottomPipeBox.move((-speed * delta), 0);
+    topPipeBox.move((-speed * delta), 0);
+    
     top_pipe_sprite.move((-speed * delta), 0);
     if(pipe_sprite.getPosition().x < -40){
         pipe_sprite.move(40, 0);
@@ -96,11 +112,16 @@ static void update(float elapsed){
         }
         top_pipe_sprite.move(500, 0);
         bottom_pipe_sprite.move(500, 0);
+        bottomPipeBox.move(500, 0);
+        topPipeBox.move(500, 0);
+        
         bottom_pipe_sprite.setPosition(bottom_pipe_sprite.getPosition().x, currentdistance);
+        bottomPipeBox.setPosition(bottomPipeBox.getPosition().x, currentdistance);
         top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
+        topPipeBox.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
        
     }
-    
+    collided();
     //gravity
     
     birdSprite.move(0, 4);
@@ -111,7 +132,7 @@ static void update(float elapsed){
 static void birdAnimate(float elapsedTime){
  //   birdSprite.setTexture(birdTexture1);
     accumulator += elapsedTime * animateSpeed;
-    std::cout << accumulator << std::endl;
+  
     if(accumulator > 1 && accumulator < 2){
         birdSprite.setTexture(birdTexture1);
     }else if(accumulator > 2 && accumulator < 3){
@@ -138,6 +159,9 @@ static void render(){
    
     window.draw(birdSprite);
     
+    window.draw(bottomPipeBox);
+    
+    window.draw(topPipeBox);
    
     if(paused == true){
         window.draw(paused_sprite);
@@ -238,11 +262,14 @@ static void init(){
     pipe_gap = 20;
     bottom_pipe_sprite.setTexture(bottom_pipe);
     bottom_pipe_sprite.setScale(3,3);
+    bottomPipeBox.move(600, 0);
+    
     bottom_pipe_sprite.move(600, 0);
     
     top_pipe_sprite.setTexture(top_pipe);
     top_pipe_sprite.setScale(3, 3);
     top_pipe_sprite.move(600, 400 + gap);
+    topPipeBox.move(600, 400 + gap);
     
     birdSprite.setTexture(birdTexture1);
     birdSprite.setScale(4, 4);
