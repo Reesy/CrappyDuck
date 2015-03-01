@@ -1,5 +1,5 @@
 # CrappyDuck
-This is a clone of flappybird using SFML, it's made just fun!
+This is a clone of flappybird using SFML, it's made just for fun!
 
 SFML can be found http://www.sfml-dev.org
 
