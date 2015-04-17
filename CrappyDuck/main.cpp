@@ -47,6 +47,8 @@ sf::Texture bottom_pipe;
 sf::Sprite top_pipe_sprite;
 sf::Sprite bottom_pipe_sprite;
 
+sf::Sprite numbers;
+
 sf::RectangleShape birdBox(sf::Vector2f(55, 45));
 
 sf::RectangleShape topPipeBox(sf::Vector2f(70, 400));
@@ -63,6 +65,17 @@ sf::Sprite birdSprite;
 sf::Texture birdTexture2;
 
 sf::Texture birdTexture3;
+
+sf::Texture One;
+sf::Texture Two;
+sf::Texture Three;
+sf::Texture Four;
+sf::Texture Five;
+sf::Texture Six;
+sf::Texture Seven;
+sf::Texture Eight;
+sf::Texture Nine;
+
 
 sf::Event event;
 std::vector<sf::Sprite> birdAnimation;
@@ -132,6 +145,7 @@ static void update(float elapsed){
     collided();
     //gravity
     
+   
     birdSprite.move(0, 4);
     birdBox.move(0, 4);
 
@@ -194,7 +208,6 @@ static void input(){
         birdBox.move(0, -80);
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::K){
-        std::cout << "This worked!" << std::endl;
         paused = false;
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
@@ -290,7 +303,7 @@ static void init(){
     currentdistance = 0;
     paused = false;
     started = true;
-    
+    endState = false;
     frameCounter = 0;
     
     animateSpeed = 5;
@@ -325,7 +338,7 @@ int main(int, char const**)
         if(paused == false && started == true){
             update(elapsed.asSeconds());
         }
-      
+    
         window.display();
         
     }
