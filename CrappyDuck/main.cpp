@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-
+#include <math.h>
 // Here is a small helper for you ! Have a look.
 #include "ResourcePath.hpp"
 
@@ -47,6 +47,8 @@ sf::Texture bottom_pipe;
 sf::Sprite top_pipe_sprite;
 sf::Sprite bottom_pipe_sprite;
 
+sf::Sprite numbers;
+
 sf::RectangleShape birdBox(sf::Vector2f(55, 45));
 
 sf::RectangleShape topPipeBox(sf::Vector2f(70, 400));
@@ -64,9 +66,20 @@ sf::Texture birdTexture2;
 
 sf::Texture birdTexture3;
 
+sf::Texture One;
+sf::Texture Two;
+sf::Texture Three;
+sf::Texture Four;
+sf::Texture Five;
+sf::Texture Six;
+sf::Texture Seven;
+sf::Texture Eight;
+sf::Texture Nine;
+
+
 sf::Event event;
 std::vector<sf::Sprite> birdAnimation;
-
+static void lerp(float currentPosition, float outputPosition, float deltaTime);
 
 int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
 int pipe_gap; // This is the vertical gap between the pair of piped
@@ -80,6 +93,9 @@ bool started;
 bool countBlock;
 bool paused;
 bool endState;
+bool flight; // this is true when the user has input a jump command for a specific unit of time.
+bool flapping;
+float timeOfClick;
 
 static void collided(){
     
@@ -132,10 +148,23 @@ static void update(float elapsed){
     collided();
     //gravity
     
-    birdSprite.move(0, 4);
-    birdBox.move(0, 4);
-
+    if(flight){
+        timeOfClick += delta;
+        std::cout << timeOfClick << std::endl;
+        if(timeOfClick > 15){
+            flight = false;
+        }
+    }
+    
+    if(flight){
+        birdSprite.move(0, -4);
+        birdBox.move(0, -4);
+    }else{
+        birdSprite.move(0, 4);
+        birdBox.move(0, 4);
+    }
 }
+
 
 static void birdAnimate(float elapsedTime){
  //   birdSprite.setTexture(birdTexture1);
@@ -175,7 +204,14 @@ static void render(){
         window.draw(paused_sprite);
     }
 }
-
+static void lerp(float currentPosition, float outputPosition, float deltaTime){
+    
+    
+    std::cout << sin(deltaTime) << std::endl;
+    
+    
+    
+}
 static void input(){
     
     // Close window: exit
@@ -190,11 +226,10 @@ static void input(){
     
     // plays music
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space){
-        birdSprite.move(0, -80);
-        birdBox.move(0, -80);
+        timeOfClick = 0;
+        flight = true;
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::K){
-        std::cout << "This worked!" << std::endl;
         paused = false;
     }
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Left){
@@ -256,6 +291,7 @@ static void loadResources(){
 }
 
 static void init(){
+    
     text.setColor(sf::Color::Black);
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     window.setFramerateLimit(60);
@@ -290,10 +326,13 @@ static void init(){
     currentdistance = 0;
     paused = false;
     started = true;
-    
+    endState = false;
     frameCounter = 0;
     
     animateSpeed = 5;
+    timeOfClick = 0;
+    flight = false;
+    flapping = false;
     //birdAnimation.push_back(pipe_sprite);
 }
 
@@ -325,7 +364,7 @@ int main(int, char const**)
         if(paused == false && started == true){
             update(elapsed.asSeconds());
         }
-      
+    
         window.display();
         
     }
