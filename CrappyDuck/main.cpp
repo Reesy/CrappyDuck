@@ -79,7 +79,7 @@ sf::Texture Nine;
 
 sf::Event event;
 std::vector<sf::Sprite> birdAnimation;
-static void lerp(float currentPosition, float outputPosition, float deltaTime);
+//static void lerp(float currentPosition, float outputPosition, float deltaTime);
 
 int gap = 140; //change this to increase difficulty by making gaps from each pillar wider
 int pipe_gap; // This is the vertical gap between the pair of piped
@@ -119,29 +119,43 @@ static void update(float elapsed){
         pipe_sprite.move(40, 0);
         
     }
-  
+    //collect score
     if(bottomPipeBox.getPosition().x < 110 && countBlock == false){
         score++;
         countBlock = true;
         std::cout << "The Score is: " << score << std::endl;
     }
  
+    
+    //generate sprite
     if(bottom_pipe_sprite.getPosition().x < -50){
+        //randomly applies pipe position
         int random_dist = rand() % 2;
-        if(random_dist == 0 & bottom_pipe_sprite.getPosition().y < gap){
-            currentdistance += gap;
-        }else{
-            currentdistance -= gap;
+
+        if(random_dist == 0){
+            if(top_pipe_sprite.getPosition().y > 440){
+                gap = 0;
+            }else{
+                gap = 100;
+            }
+        }else if(random_dist == 1){
+            if(top_pipe_sprite.getPosition().y < 440){
+                gap = 0;
+            }else{
+                gap = -100;
+            }
         }
-        top_pipe_sprite.move(500, 0);
-        bottom_pipe_sprite.move(500, 0);
-        bottomPipeBox.move(500, 0);
-        topPipeBox.move(500, 0);
+
+
+        bottom_pipe_sprite.move(500, gap);
+        bottomPipeBox.move(500, gap);
         
-        bottom_pipe_sprite.setPosition(bottom_pipe_sprite.getPosition().x, currentdistance);
-        bottomPipeBox.setPosition(bottomPipeBox.getPosition().x, currentdistance);
-        top_pipe_sprite.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
-        topPipeBox.setPosition(top_pipe_sprite.getPosition().x, (400 + gap)+ currentdistance);
+        top_pipe_sprite.move(500, gap);
+        topPipeBox.move(500, gap);
+
+        std::cout << top_pipe_sprite.getPosition().y << std::endl;
+        
+        
         countBlock = false;
        
     }
@@ -150,7 +164,7 @@ static void update(float elapsed){
     
     if(flight){
         timeOfClick += delta;
-        std::cout << timeOfClick << std::endl;
+       // std::cout << timeOfClick << std::endl;
         if(timeOfClick > 15){
             flight = false;
         }
@@ -192,25 +206,17 @@ static void render(){
     
     window.draw(pipe_sprite);
     
-    window.draw(birdBox);
+    //window.draw(birdBox);
    
     window.draw(birdSprite);
     
-    window.draw(bottomPipeBox);
+   // window.draw(bottomPipeBox);
     
-    window.draw(topPipeBox);
+    //window.draw(topPipeBox);
    
     if(paused == true){
         window.draw(paused_sprite);
     }
-}
-static void lerp(float currentPosition, float outputPosition, float deltaTime){
-    
-    
-    std::cout << sin(deltaTime) << std::endl;
-    
-    
-    
 }
 static void input(){
     
@@ -224,7 +230,6 @@ static void input(){
         window.close();
     }
     
-    // plays music
     if(event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Space){
         timeOfClick = 0;
         flight = true;
@@ -322,7 +327,7 @@ static void init(){
     birdBox.move(178,258);
     
     pipe_sprite.move(0, 600);
-    music.play();
+ //   music.play();  //this is where the music gets played
     currentdistance = 0;
     paused = false;
     started = true;
