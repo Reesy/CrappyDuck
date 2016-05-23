@@ -35,7 +35,7 @@ file(GLOB_RECURSE CrappyDuck_FILES
 	"${PROJECT_SOURCE_DIR}/include/*.h"
 	"${PROJECT_SOURCE_DIR}/src/*.cpp"
 )
-file(COPY resources DESTINATION /)
+file(COPY resources DESTINATION ./)
 
 add_executable(CrappyDuck
 	${CrappyDuck_FILES}
